@@ -45,7 +45,6 @@ import org.apache.cordova.CordovaResourceApi.OpenForReadResult;
 import org.apache.cordova.LOG;
 import org.apache.cordova.PluginManager;
 import org.apache.cordova.PluginResult;
-import org.apache.cordova.Whitelist;
 import org.apache.cordova.file.FileUtils;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -685,16 +684,7 @@ public class FileTransfer extends CordovaPlugin {
         if (isLocalTransfer) {
             shouldAllowRequest = true;
         }
-        if (shouldAllowRequest == null) {
-            try {
-                Method gwl = webView.getClass().getMethod("getWhitelist");
-                Whitelist whitelist = (Whitelist)gwl.invoke(webView);
-                shouldAllowRequest = whitelist.isUrlWhiteListed(source);
-            } catch (NoSuchMethodException e) {
-            } catch (IllegalAccessException e) {
-            } catch (InvocationTargetException e) {
-            }
-        }
+        shouldAllowRequest = true;
         if (shouldAllowRequest == null) {
             try {
                 Method gpm = webView.getClass().getMethod("getPluginManager");
